@@ -40,9 +40,9 @@ if(!empty($_GET['id'])){
 
 <div class="col">
 
-<form action="alunoform.php" method="post">
+<form action="userregister.php" method="post">
 
-  <h3>Formulário Aluno</h3>
+  <h3>Registrar Usuário</h3>
   
   <div class="mb-3">
   <input type="hidden" name="id" 
@@ -51,21 +51,18 @@ if(!empty($_GET['id'])){
 
     <label for="nome" class="form-label">Nome</label>
     <input type="text" class="form-control" name="nome" 
-    value="<?php echo !empty($data->nome) ? $data->nome : "" ?>" 
     placeholder="Nome">
   </div>
 
   <div class="mb-3">
     <label for="cpf" class="form-label">CPF</label>
     <input type="text" class="form-control" name="cpf" 
-    value="<?php echo !empty($data->cpf) ? $data->cpf : "" ?>"
     placeholder="000.111.222-00">
   </div>
 
   <div class="mb-3">
-    <label for="telefone" class="form-label">Telefone</label>
-    <input type="text" class="form-control" name="telefone" 
-    value="<?php echo !empty($data->telefone) ? $data->telefone : "" ?>"
+    <label for="senha" class="form-label">Senha</label>
+    <input type="text" class="form-control" name="senha" 
     placeholder="(49) 99988-7744">
   </div>
     <button type="submit" class="btn btn-success">Salvar</button>

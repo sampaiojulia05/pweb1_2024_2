@@ -57,6 +57,73 @@ function conn(){
     return $st->fetchAll(PDO::FETCH_CLASS);
   }
 
+  function destroy($id){
+
+    //var_dump($id);
+    //exit;
+    
+    $conn = $this->conn();
+    $sql = "DELETE FROM aluno WHERE id = ?";
+
+    $st = $conn->prepare($sql);
+    $st->execute([$id]);
+  }
+
+  function find($id){
+    
+    $conn = $this->conn();
+    $sql = "SELECT * FROM aluno WHERE id = ?";
+
+    $st = $conn->prepare($sql);
+    $st->execute([$id]);
+
+    return $st->fetchObject();
+  }
+
+
+  function update($dados){
+    
+    $conn = $this->conn();
+    $sql = "UPDATE aluno SET nome=?, telefone=?, cpf=? Where id = ?";
+
+    $st = $conn->prepare($sql);
+    $st->execute($dados['nome'],$dados['telefone'],$dados['cpf'],$dados['id']);
+
+    return $st->fetchAll(PDO::FETCH_CLASS);
+  }
+
+  function search($data){
+
+    $tipo = $data['tipo'];
+    $valor = $data['valor'];
+    
+    $conn = $this->conn();
+    $sql = "SELECT * FROM aluno WHERE $tipo LIKE ?";
+
+    $st = $conn->prepare($sql);
+    $st->execute(["%$valor%"]);
+
+    return $st->fetchAll(PDO::FETCH_CLASS);
+  }
+
+  function login($data){
+ 
+    $conn = $this->conn();
+    $sql = "SELECT * FROM aluno WHERE cpf LIKE ?";
+
+    $st = $conn->prepare($sql);
+    $st->execute([$data['cpf']]);
+
+    $result = $st->fetchObject();
+
+    if(password_verify($data['senha'], $result->senha)){
+      return $result;
+    } else{
+      return "Error";
+    }
+ 
+  }
+  
 }
 
 

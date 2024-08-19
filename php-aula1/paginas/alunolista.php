@@ -4,11 +4,19 @@ include "../db.class.php";
 
 head();
 
+
 $db = new db();
 $db->conn();
 
-$dados = $db->all();
+if(!empty($_GET['id'])){
+  $db->destroy($_GET['id']);
+}
 
+if(!empty($_POST)){
+  $dados = $db->search($_POST);
+}else{
+$dados = $db->all();
+}
 //var_dump($dados);
 //exit;
 
@@ -19,7 +27,20 @@ $dados = $db->all();
   <h3>Listagem de Alunos</h3>
 
   <div class="container-fluid">
-    <form class="d-flex" role="search">
+    <form class="d-flex" method="post">
+    <div class = "col-2 px-1">
+      <select name="tipo" class="form-select me-4">
+        <option value = "cpf">CPF</option>
+        <option value = "nome">Nome</option>
+        <option value = "telefone">Telefone</option>
+</select>
+</div>
+
+<div class = "col-4 px-1">
+<input class="form-control me-4" type="search" name="valor" 
+placeholder="Pesquisar" 
+aria-label="Search">
+    </div>
 
     <div class="col-4">
       <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
@@ -50,6 +71,8 @@ $dados = $db->all();
       <td>$item->nome</td>
       <td>$item->cpf</td>
       <td>@$item->telefone</td>
+      <td><a href='alunoform.php?id=$item->id'>Editar</a></td>
+      <td><a onclick='return confirm(\"Deseja excluir?\")' href='alunolista.php?id=$item->id'>Deletar</a></td>
     </tr>";
     
 }
